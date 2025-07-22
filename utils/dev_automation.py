@@ -1,4 +1,10 @@
+# kirohub/utils/dev_automation.py
+
 def generate_commit_and_issue(task_description: str) -> str:
+    """
+    Generate a prompt for creating a conventional commit message
+    and GitHub issue based on the dev task description.
+    """
     return (
         f"Generate a conventional commit message and a GitHub issue template "
         f"based on this task description:\n\n{task_description}\n\n"

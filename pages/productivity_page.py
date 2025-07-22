@@ -1,10 +1,10 @@
 import streamlit as st
 import google.generativeai as genai
 
-from kirohub.utils.resume_helper import build_resume_prompt
-from kirohub.utils.dev_automation import generate_commit_and_issue
-from kirohub.utils.content_tools import rewrite_content
-from kirohub.utils.calendar_helper import summarize_schedule
+from utils.resume_helper import build_resume_prompt
+from utils.dev_automation import generate_commit_and_issue
+from utils.content_tools import rewrite_content
+from utils.calendar_helper import summarize_schedule
 
 def run_productivity():
     st.title("📄 Productivity & Workflow Tools")

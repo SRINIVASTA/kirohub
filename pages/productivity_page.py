@@ -1,40 +1,30 @@
 import streamlit as st
-from google import genai
-from utils.resume_helper import build_resume_prompt
-
-import streamlit as st
+import google.generativeai as genai
 
 def run_productivity():
-    st.header("Welcome to the Productivity Page!")
-    # Add more content for the Productivity page here
+    st.title("Productivity Enhancer")
 
+    # Get the API key from the session state (already set in the main app)
+    api_key = st.session_state.get("api_key", None)
 
-# Get API key from user input
-api_key = st.text_input("Enter your Google API Key", type="password")
-if not api_key:
-    st.warning("Please enter your API key to continue.")
-    st.stop()
+    if api_key:
+        # Allow user input for their task or productivity query
+        user_query = st.text_area("Enter your productivity-related task or query:")
 
-# Initialize client
-client = genai.Client(api_key=api_key)
-
-# Inputs
-resume = st.text_area("Paste your Resume", height=300)
-job_desc = st.text_area("Paste the Job Description", height=300)
-
-if st.button("Improve Resume"):
-    if not resume.strip() or not job_desc.strip():
-        st.warning("Please provide both resume and job description.")
-    else:
-        prompt = build_resume_prompt(resume, job_desc)
-        with st.spinner("Gemini is analyzing your resume..."):
+        if user_query:
             try:
-                # Directly generate content
-                response = client.generate_content(
-                    model="gemini-2.0-flash-exp",
-                    prompt=prompt,
-                )
-                # The generated text is usually in response.candidates[0].content
-                st.markdown(response.candidates[0].content)
+                # Generate a response from the Gemini model
+                prompt = f"Provide productivity-enhancing suggestions for the following task: {user_query}"
+                response = genai.GenerativeModel('gemini-1.5-flash').generate_content(prompt)
+
+                # Display the AI-generated response
+                st.subheader("AI Suggestions:")
+                st.write(response.text)
+
             except Exception as e:
-                st.error(f"Error from Gemini: {e}")
+                st.error(f"Error generating content: {e}")
+        else:
+            st.warning("Please enter a query to get suggestions.")
+    else:
+        st.warning("API Key is not configured. Please enter it in the main app.")
+

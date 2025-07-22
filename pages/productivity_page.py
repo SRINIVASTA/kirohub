@@ -1,10 +1,10 @@
 import streamlit as st
 import google.generativeai as genai
 
-from utils.resume_helper import build_resume_prompt
-from utils.dev_automation import generate_commit_and_issue
-from utils.content_tools import rewrite_content
-from utils.calendar_helper import summarize_schedule
+from kirohub.utils.resume_helper import build_resume_prompt
+from kirohub.utils.dev_automation import generate_commit_and_issue
+from kirohub.utils.content_tools import rewrite_content
+from kirohub.utils.calendar_helper import summarize_schedule
 
 def run_productivity():
     st.title("📄 Productivity & Workflow Tools")
@@ -21,21 +21,22 @@ If it boosts your flow, it fits here. Examples: dev workflow automations, resume
         "📅 Calendar Organizer"
     ])
 
+    # Resume Helper Tab
     with tab1:
         st.header("🛠️ Resume Helper with AI Suggestions")
         st.markdown("""
 Example:
 
-Resume:
+Resume:  
 Experienced software developer with 5 years in Python and AI.
 
-Job Description:
+Job Description:  
 Looking for a Python developer familiar with AI and ML techniques.
 """)
         resume = st.text_area("Paste your resume here:", height=200)
         job = st.text_area("Paste the job description here:", height=200)
 
-        if st.button("Get AI Suggestions", key="btn_resume"):
+        if st.button("Get AI Suggestions"):
             if not resume.strip() or not job.strip():
                 st.warning("Both fields are required.")
             else:
@@ -49,6 +50,7 @@ Looking for a Python developer familiar with AI and ML techniques.
                 except Exception as e:
                     st.error(f"Error: {e}")
 
+    # Dev Automation Tab
     with tab2:
         st.header("⚙️ Generate Dev Commit & GitHub Issue")
         st.markdown("""
@@ -58,12 +60,12 @@ Describe your dev task or bug:
 
 fix bug in user login function - now handles invalid inputs better
 
-- added check for empty username and password
-- return proper error message to client
+- added check for empty username and password  
+- return proper error message to client  
 - refactored login handler for better readability
 """)
         task = st.text_area("Describe your dev task or bug:", key="dev_task")
-        if st.button("Generate Dev Artifacts", key="btn_dev_automation"):
+        if st.button("Generate Dev Artifacts"):
             if task.strip():
                 try:
                     model = genai.GenerativeModel("gemini-1.5-flash")
@@ -77,6 +79,7 @@ fix bug in user login function - now handles invalid inputs better
             else:
                 st.warning("Please enter a task description.")
 
+    # Content Rewriter Tab
     with tab3:
         st.header("📝 Rewrite Content with AI")
         st.markdown("""
@@ -88,12 +91,12 @@ Hi team,
 
 please find the attached report for Q2.
 
-thanks,
+thanks,  
 John
 """)
         content = st.text_area("Paste your content (email, text, etc.):", key="content_text")
         tone = st.selectbox("Select tone", ["Formal", "Friendly", "Persuasive"], key="tone_select")
-        if st.button("Rewrite Content", key="btn_rewrite_content"):
+        if st.button("Rewrite Content"):
             if content.strip():
                 try:
                     model = genai.GenerativeModel("gemini-1.5-flash")
@@ -107,6 +110,7 @@ John
             else:
                 st.warning("Please paste some content.")
 
+    # Calendar Organizer Tab
     with tab4:
         st.header("📅 Smart Schedule Organizer")
         st.markdown("""
@@ -120,7 +124,7 @@ Buy groceries
 23rd July 2025 Job in Oracle
 """)
         schedule = st.text_area("Paste your schedule, tasks, or to-dos:", key="schedule_input")
-        if st.button("Summarize & Prioritize", key="btn_schedule"):
+        if st.button("Summarize & Prioritize"):
             if schedule.strip():
                 try:
                     model = genai.GenerativeModel("gemini-1.5-flash")

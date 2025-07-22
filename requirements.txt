@@ -1,10 +1,8 @@
 streamlit
-google-generative-ai
-python-dotenv
-requests
-streamlit-authenticator
+google-generativeai
 pandas
-plotly
-python-dateutil
+openpyxl
+pypdf
+python-docx
 Pillow
-pip>=25.1.1
+moviepy

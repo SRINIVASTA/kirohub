@@ -7,6 +7,8 @@ from utils.content_tools import rewrite_content
 from utils.calendar_helper import summarize_schedule
 
 def run_productivity():
+    st.write("🚀 Productivity page loaded!")  # Debug message to confirm loading
+
     st.title("📄 Productivity & Workflow Tools")
 
     st.markdown("""
@@ -33,10 +35,10 @@ Experienced software developer with 5 years in Python and AI.
 Job Description:  
 Looking for a Python developer familiar with AI and ML techniques.
 """)
-        resume = st.text_area("Paste your resume here:", height=200)
-        job = st.text_area("Paste the job description here:", height=200)
+        resume = st.text_area("Paste your resume here:", height=200, key="resume_input")
+        job = st.text_area("Paste the job description here:", height=200, key="job_input")
 
-        if st.button("Get AI Suggestions"):
+        if st.button("Get AI Suggestions", key="btn_resume"):
             if not resume.strip() or not job.strip():
                 st.warning("Both fields are required.")
             else:
@@ -65,7 +67,7 @@ fix bug in user login function - now handles invalid inputs better
 - refactored login handler for better readability
 """)
         task = st.text_area("Describe your dev task or bug:", key="dev_task")
-        if st.button("Generate Dev Artifacts"):
+        if st.button("Generate Dev Artifacts", key="btn_dev"):
             if task.strip():
                 try:
                     model = genai.GenerativeModel("gemini-1.5-flash")
@@ -96,7 +98,7 @@ John
 """)
         content = st.text_area("Paste your content (email, text, etc.):", key="content_text")
         tone = st.selectbox("Select tone", ["Formal", "Friendly", "Persuasive"], key="tone_select")
-        if st.button("Rewrite Content"):
+        if st.button("Rewrite Content", key="btn_rewrite"):
             if content.strip():
                 try:
                     model = genai.GenerativeModel("gemini-1.5-flash")
@@ -124,7 +126,7 @@ Buy groceries
 23rd July 2025 Job in Oracle
 """)
         schedule = st.text_area("Paste your schedule, tasks, or to-dos:", key="schedule_input")
-        if st.button("Summarize & Prioritize"):
+        if st.button("Summarize & Prioritize", key="btn_schedule"):
             if schedule.strip():
                 try:
                     model = genai.GenerativeModel("gemini-1.5-flash")

@@ -19,7 +19,7 @@ if st.button("🛠️ Improve Resume"):
     else:
         with st.spinner("Gemini is analyzing your resume..."):
             try:
-                model = genai.GenerativeModel("gemini-pro")
+                model = genai.GenerativeModel("gemini-2.0-flash-exp")
                 prompt = build_resume_prompt(resume, job_desc)  # use utility function here
                 response = model.generate_content(prompt)
                 st.success("Suggestions ready!")

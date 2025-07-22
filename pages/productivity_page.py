@@ -8,6 +8,7 @@ from utils.calendar_helper import summarize_schedule
 
 def run_productivity():
     st.title("📄 Productivity & Workflow Tools")
+    st.write("Welcome to the Productivity Page!")  # <-- Added welcome message
 
     st.markdown("""
 Build tools that save time, reduce friction, or simplify everyday tasks - for developers or anyone else.  

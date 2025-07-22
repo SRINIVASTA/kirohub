@@ -2,6 +2,13 @@ import streamlit as st
 from google import genai
 from utils.resume_helper import build_resume_prompt
 
+import streamlit as st
+
+def run_productivity():
+    st.header("Welcome to the Productivity Page!")
+    # Add more content for the Productivity page here
+
+
 # Get API key from user input
 api_key = st.text_input("Enter your Google API Key", type="password")
 if not api_key:

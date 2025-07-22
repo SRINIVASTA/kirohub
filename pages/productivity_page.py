@@ -1,30 +1,29 @@
+# pages/productivity_page.py
+
 import streamlit as st
 import google.generativeai as genai
+from utils.resume_helper import build_resume_prompt
 
 def run_productivity():
-    st.title("Productivity Enhancer")
+    st.title("📄 Resume Optimizer for Job Matching")
 
-    # Get the API key from the session state (already set in the main app)
-    api_key = st.session_state.get("api_key", None)
+    resume_text = st.text_area("Paste your resume here:", height=200)
+    job_description = st.text_area("Paste the job description here:", height=200)
 
-    if api_key:
-        # Allow user input for their task or productivity query
-        user_query = st.text_area("Enter your productivity-related task or query:")
+    if st.button("Get AI Suggestions"):
+        if not resume_text.strip() or not job_description.strip():
+            st.warning("Please provide both resume and job description.")
+            return
 
-        if user_query:
-            try:
-                # Generate a response from the Gemini model
-                prompt = f"Provide productivity-enhancing suggestions for the following task: {user_query}"
-                response = genai.GenerativeModel('gemini-1.5-flash').generate_content(prompt)
+        try:
+            model = genai.GenerativeModel('gemini-1.5-flash')
+            prompt = build_resume_prompt(resume_text, job_description)
 
-                # Display the AI-generated response
-                st.subheader("AI Suggestions:")
-                st.write(response.text)
+            with st.spinner("Analyzing your resume..."):
+                response = model.generate_content(prompt)
 
-            except Exception as e:
-                st.error(f"Error generating content: {e}")
-        else:
-            st.warning("Please enter a query to get suggestions.")
-    else:
-        st.warning("API Key is not configured. Please enter it in the main app.")
+            st.subheader("💡 Suggestions to Improve Your Resume:")
+            st.write(response.text)
 
+        except Exception as e:
+            st.error(f"❌ Error generating content: {e}")

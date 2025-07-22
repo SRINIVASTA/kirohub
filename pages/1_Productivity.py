@@ -1,6 +1,7 @@
 import streamlit as st
 import google.generativeai as genai
 import os
+from utils.resume_helper import build_resume_prompt  # import your helper function
 
 # Setup Gemini API Key
 GOOGLE_API_KEY = st.secrets.get("GOOGLE_API_KEY", os.getenv("GOOGLE_API_KEY"))
@@ -19,20 +20,7 @@ if st.button("🛠️ Improve Resume"):
         with st.spinner("Gemini is analyzing your resume..."):
             try:
                 model = genai.GenerativeModel("gemini-pro")
-                prompt = f"""
-Act as a resume optimization expert.
-
-Given the following RESUME and JOB DESCRIPTION, provide:
-1. Tailored suggestions to align the resume to the role
-2. Rewritten or improved bullet points
-3. Skills or experience that should be added
-
-Resume:
-{resume}
-
-Job Description:
-{job_desc}
-"""
+                prompt = build_resume_prompt(resume, job_desc)  # use utility function here
                 response = model.generate_content(prompt)
                 st.success("Suggestions ready!")
                 st.markdown(response.text)

@@ -1,4 +1,4 @@
-# utils/resume_helper.py
+# kirohub/utils/resume_helper.py
 
 def build_resume_prompt(resume_text: str, job_description: str) -> str:
     """

@@ -1,17 +1,13 @@
 # utils/resume_helper.py
 
-def build_resume_prompt(resume_text: str, job_desc: str) -> str:
-    return f"""
-Act as a resume optimization expert.
-
-Given the following RESUME and JOB DESCRIPTION, provide:
-1. Tailored suggestions to align the resume to the role
-2. Rewritten or improved bullet points
-3. Skills or experience that should be added
+def build_resume_prompt(resume: str, job_desc: str) -> str:
+    return f"""Compare the following resume with the job description and provide suggestions to improve the resume.
 
 Resume:
-{resume_text}
+{resume}
 
 Job Description:
 {job_desc}
+
+Return your suggestions in a bullet-point format.
 """

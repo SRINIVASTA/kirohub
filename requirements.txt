@@ -7,3 +7,4 @@ pandas
 plotly
 python-dateutil
 Pillow
+pip>=25.1.1

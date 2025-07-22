@@ -1,6 +1,7 @@
 import streamlit as st
 import google.generativeai as genai
 import os
+from utils.ai_game import build_game_prompt
 
 GOOGLE_API_KEY = st.secrets.get("GOOGLE_API_KEY", os.getenv("GOOGLE_API_KEY"))
 genai.configure(api_key=GOOGLE_API_KEY)
@@ -19,23 +20,12 @@ if st.button("Continue Adventure"):
     if choice.strip() == "":
         st.warning("Please enter your action!")
     else:
-        prompt = f"""
-You are the narrator of a text adventure game.
-
-Current story:
-{st.session_state.story}
-
-Player action:
-{choice}
-
-Continue the story in a vivid, engaging way, adding consequences and options for the player.
-"""
+        prompt = build_game_prompt(st.session_state.story, choice)
         model = genai.GenerativeModel("gemini-pro")
         try:
             response = model.generate_content(prompt)
-            next_segment = response.text.strip()
             st.session_state.history.append(choice)
-            st.session_state.story = next_segment
+            st.session_state.story = response.text.strip()
             st.experimental_rerun()
         except Exception as e:
             st.error(f"AI Error: {e}")

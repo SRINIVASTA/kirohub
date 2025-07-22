@@ -1,5 +1,5 @@
 streamlit
-google-genai
+google-generative-ai
 python-dotenv
 requests
 streamlit-authenticator

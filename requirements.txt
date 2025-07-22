@@ -1,5 +1,5 @@
 streamlit
-import google.generativeai as genai
+google-genai
 python-dotenv
 requests
 streamlit-authenticator

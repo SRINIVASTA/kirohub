@@ -20,7 +20,7 @@ if not api_key:
 # Initialize client
 try:
     client = genai.Client(api_key=api_key)
-    model = client.models.get("gemini-2.0-flash-exp")  # or your preferred model name
+    model = genai.GenerativeModel("gemini-2.0-flash-exp")  # or your preferred model name
 except Exception as e:
     st.error(f"❌ Failed to initialize Google Gemini client: {e}")
     st.stop()

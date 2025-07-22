@@ -8,7 +8,7 @@ from utils.calendar_helper import summarize_schedule
 
 def run_productivity():
     st.title("📄 Productivity & Workflow Tools")
-    st.write("Welcome to the Productivity Page!")  # <-- Added welcome message
+    st.write("Welcome to the Productivity Page!")
 
     st.markdown("""
 Build tools that save time, reduce friction, or simplify everyday tasks - for developers or anyone else.  
@@ -40,17 +40,16 @@ Looking for a Python developer familiar with AI and ML techniques.
         if st.button("Get AI Suggestions"):
             if not resume.strip() or not job.strip():
                 st.warning("Both fields are required.")
-                return
-
-            try:
-                model = genai.GenerativeModel("gemini-1.5-flash")
-                prompt = build_resume_prompt(resume, job)
-                with st.spinner("Analyzing..."):
-                    response = model.generate_content(prompt)
-                st.subheader("💡 Suggestions:")
-                st.write(response.text)
-            except Exception as e:
-                st.error(f"Error: {e}")
+            else:
+                try:
+                    model = genai.GenerativeModel("gemini-1.5-flash")
+                    prompt = build_resume_prompt(resume, job)
+                    with st.spinner("Analyzing..."):
+                        response = model.generate_content(prompt)
+                    st.subheader("💡 Suggestions:")
+                    st.write(response.text)
+                except Exception as e:
+                    st.error(f"Error: {e}")
 
     # Dev Automation Tab
     with tab2:

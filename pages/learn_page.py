@@ -1,6 +1,7 @@
 import streamlit as st
 import google.generativeai as genai
 import os
+from utils.tutor import build_tutor_prompt
 
 GOOGLE_API_KEY = st.secrets.get("GOOGLE_API_KEY", os.getenv("GOOGLE_API_KEY"))
 genai.configure(api_key=GOOGLE_API_KEY)
